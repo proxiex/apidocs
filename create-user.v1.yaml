@@ -1,0 +1,180 @@
+openapi: 3.0.0
+info:
+  title: Bantupay API
+  version: '1.0'
+  description: This is cool
+  contact:
+    name: Bantypay
+servers:
+  - url: 'https://api-testnet.bantupay.org'
+paths:
+  /v1/user/location/info:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  currency:
+                    type: object
+                    properties:
+                      alphabetic_code:
+                        type: string
+                        minLength: 1
+                      currency:
+                        type: string
+                        minLength: 1
+                      entity:
+                        type: string
+                        minLength: 1
+                      currency_format:
+                        type: object
+                        properties:
+                          country_currency:
+                            type: string
+                            minLength: 1
+                          currency_description:
+                            type: object
+                            properties:
+                              fraction_size:
+                                type: number
+                              symbol:
+                                type: object
+                                properties:
+                                  grapheme:
+                                    type: string
+                                    minLength: 1
+                                  template:
+                                    type: string
+                                    minLength: 1
+                                  rtl:
+                                    type: boolean
+                                required:
+                                  - grapheme
+                                  - template
+                                  - rtl
+                            required:
+                              - fraction_size
+                              - symbol
+                        required:
+                          - country_currency
+                          - currency_description
+                    required:
+                      - alphabetic_code
+                      - currency
+                      - entity
+                      - currency_format
+                  data:
+                    type: string
+                    minLength: 1
+                  geodata:
+                    type: object
+                    properties:
+                      as:
+                        type: string
+                        minLength: 1
+                      city:
+                        type: string
+                        minLength: 1
+                      country:
+                        type: string
+                        minLength: 1
+                      countryCode:
+                        type: string
+                        minLength: 1
+                      isp:
+                        type: string
+                        minLength: 1
+                      lat:
+                        type: number
+                      lon:
+                        type: number
+                      org:
+                        type: string
+                      query:
+                        type: string
+                        minLength: 1
+                      region:
+                        type: string
+                        minLength: 1
+                      regionName:
+                        type: string
+                        minLength: 1
+                      status:
+                        type: string
+                        minLength: 1
+                      timezone:
+                        type: string
+                        minLength: 1
+                      zip:
+                        type: string
+                      ip:
+                        type: string
+                        minLength: 1
+                    required:
+                      - as
+                      - city
+                      - country
+                      - countryCode
+                      - isp
+                      - lat
+                      - lon
+                      - org
+                      - query
+                      - region
+                      - regionName
+                      - status
+                      - timezone
+                      - zip
+                      - ip
+                required:
+                  - currency
+                  - data
+                  - geodata
+              examples:
+                example-1:
+                  value:
+                    currency:
+                      alphabetic_code: string
+                      currency: string
+                      entity: string
+                      currency_format:
+                        country_currency: string
+                        currency_description:
+                          fraction_size: 0
+                          symbol:
+                            grapheme: string
+                            template: string
+                            rtl: true
+                    data: string
+                    geodata:
+                      as: string
+                      city: string
+                      country: string
+                      countryCode: string
+                      isp: string
+                      lat: 0
+                      lon: 0
+                      org: string
+                      query: string
+                      region: string
+                      regionName: string
+                      status: string
+                      timezone: string
+                      zip: string
+                      ip: string
+      operationId: get-User-Info
+      description: Get's geo location information of a user
+    parameters: []
+components:
+  schemas: {}
+  securitySchemes: {}
+tags:
+  - name: Users
