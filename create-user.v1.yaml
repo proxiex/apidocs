@@ -10,9 +10,7 @@ servers:
 paths:
   /v1/user/location/info:
     get:
-      summary: Your GET endpoint
-      tags:
-        - Users
+      summary: Get user info
       responses:
         '200':
           description: OK
@@ -172,9 +170,80 @@ paths:
                       ip: string
       operationId: get-User-Info
       description: Get's geo location information of a user
+      tags:
+        - Create new user
+        - Users
+    parameters: []
+  /v1/user/account:
+    post:
+      summary: Create new user
+      operationId: post-v1-user-account
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  error:
+                    type: string
+                    minLength: 1
+                required:
+                  - error
+              examples:
+                Public key already in use:
+                  value:
+                    error: Public Key Already Exists
+      tags:
+        - Create new user
+        - Users
+      description: This endpoint creates a new user with the public key that has been generated. If the user already exsits you get a confict error. Also public key can only be used once.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                username:
+                  type: string
+                  minLength: 1
+                  description: '"newaccount", //or newaccount*domain.org'
+                domain_id:
+                  type: number
+                public_key:
+                  type: string
+                  minLength: 1
+                  description: Public key generated from bantukeypair
+              required:
+                - username
+                - domain_id
+                - public_key
+            examples:
+              New user - success:
+                value:
+                  username: jasmine*bantupay.org
+                  domain_id: 1
+                  public_key: GAOAYQLXKOMRFUDDM26FKDFE6VM72YBW6PE7YD65J74MCZXAPVSEWEYI
+              User already exist - fail:
+                value:
+                  username: jasmine*bantupay.org
+                  domain_id: 1
+                  public_key: GAOAYQLXKOMRFUDDM26FKDFE6VM72YBW6PE7YD65J74MCZXAPVSEWEYI
+        description: ''
     parameters: []
 components:
   schemas: {}
   securitySchemes: {}
 tags:
+  - name: Create new user
   - name: Users
