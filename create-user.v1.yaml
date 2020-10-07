@@ -6,7 +6,7 @@ info:
     url: images/logo.png
     backgroundColor: '#FFFFFF'
     altText: Bantu logo
-  description: This is cool
+  description: Welcome to Bantupay API Documentation.
   contact:
     name: Bantypay
 servers:
@@ -14,7 +14,7 @@ servers:
 paths:
   /v1/user/location/info:
     get:
-      summary: Get user info
+      summary: Get user geo location info
       responses:
         '200':
           description: OK
@@ -175,7 +175,6 @@ paths:
       operationId: get-User-Info
       description: Get's geo location information of a user
       tags:
-        - Create new user
         - Users
     parameters: []
   /v1/user/account:
@@ -340,19 +339,2536 @@ paths:
             examples:
               New user - success:
                 value:
-                  username: totally_new_userhere*bantupay.org
+                  username: bantupay
                   domain_id: 1
                   public_key: GAOAYQLXKOMRFUDDM26FKDFE6VM72YBW6PE7YD65J74MCZXAPVSEWEYI
               User already exist - fail:
                 value:
-                  username: jasmine*bantupay.org
+                  username: jasmine
                   domain_id: 1
                   public_key: GAOAYQLXKOMRFUDDM26FKDFE6VM72YBW6PE7YD65J74MCZXAPVSEWEYI
         description: ''
     parameters: []
+  '/v1/user/account/info/{accountName}':
+    get:
+      summary: Get specific user info
+      tags:
+        - Users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  user_info:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                        minLength: 1
+                      public_key:
+                        type: string
+                        minLength: 1
+                      memo_type:
+                        type: string
+                      memo:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      middle_name:
+                        type: string
+                      domain:
+                        type: string
+                        minLength: 1
+                      twitter: {}
+                      email: {}
+                      instagram: {}
+                      ref_code: {}
+                      image_thumbnail:
+                        type: string
+                      country_code:
+                        type: string
+                        minLength: 1
+                      mobile: {}
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+                      account_status:
+                        type: number
+                    required:
+                      - username
+                      - public_key
+                      - memo_type
+                      - memo
+                      - first_name
+                      - last_name
+                      - middle_name
+                      - domain
+                      - image_thumbnail
+                      - country_code
+                      - latitude
+                      - longitude
+                      - account_status
+                required:
+                  - user_info
+              examples:
+                user found (user is activated on blockchain):
+                  value:
+                    user_info:
+                      username: proxie
+                      public_key: GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK
+                      memo_type: ''
+                      memo: ''
+                      first_name: ''
+                      last_name: ''
+                      middle_name: ''
+                      domain: bantupay.org
+                      twitter: null
+                      email: null
+                      instagram: null
+                      ref_code: null
+                      image_thumbnail: ''
+                      country_code: NG
+                      mobile: null
+                      latitude: 6.4474
+                      longitude: 3.3903
+                      account_status: 0
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  blockchain_info:
+                    type: object
+                    properties:
+                      blockchain_status:
+                        type: number
+                      blockchain_data:
+                        type: object
+                        properties:
+                          _links:
+                            type: object
+                            properties:
+                              self:
+                                type: object
+                                properties:
+                                  href:
+                                    type: string
+                                required:
+                                  - href
+                              transactions:
+                                type: object
+                                properties:
+                                  href:
+                                    type: string
+                                required:
+                                  - href
+                              operations:
+                                type: object
+                                properties:
+                                  href:
+                                    type: string
+                                required:
+                                  - href
+                              payments:
+                                type: object
+                                properties:
+                                  href:
+                                    type: string
+                                required:
+                                  - href
+                              effects:
+                                type: object
+                                properties:
+                                  href:
+                                    type: string
+                                required:
+                                  - href
+                              offers:
+                                type: object
+                                properties:
+                                  href:
+                                    type: string
+                                required:
+                                  - href
+                              trades:
+                                type: object
+                                properties:
+                                  href:
+                                    type: string
+                                required:
+                                  - href
+                              data:
+                                type: object
+                                properties:
+                                  href:
+                                    type: string
+                                required:
+                                  - href
+                            required:
+                              - self
+                              - transactions
+                              - operations
+                              - payments
+                              - effects
+                              - offers
+                              - trades
+                              - data
+                          id:
+                            type: string
+                          account_id:
+                            type: string
+                          sequence:
+                            type: string
+                          subentry_count:
+                            type: number
+                          last_modified_ledger:
+                            type: number
+                          last_modified_time: {}
+                          thresholds:
+                            type: object
+                            properties:
+                              low_threshold:
+                                type: number
+                              med_threshold:
+                                type: number
+                              high_threshold:
+                                type: number
+                            required:
+                              - low_threshold
+                              - med_threshold
+                              - high_threshold
+                          flags:
+                            type: object
+                            properties:
+                              auth_required:
+                                type: boolean
+                              auth_revocable:
+                                type: boolean
+                              auth_immutable:
+                                type: boolean
+                            required:
+                              - auth_required
+                              - auth_revocable
+                              - auth_immutable
+                          balances: {}
+                          signers: {}
+                          data: {}
+                          paging_token:
+                            type: string
+                        required:
+                          - _links
+                          - id
+                          - account_id
+                          - sequence
+                          - subentry_count
+                          - last_modified_ledger
+                          - thresholds
+                          - flags
+                          - paging_token
+                    required:
+                      - blockchain_status
+                      - blockchain_data
+                  user_info:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                        minLength: 1
+                      public_key:
+                        type: string
+                        minLength: 1
+                      memo_type:
+                        type: string
+                      memo:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      middle_name:
+                        type: string
+                      domain:
+                        type: string
+                        minLength: 1
+                      twitter: {}
+                      email: {}
+                      instagram: {}
+                      ref_code: {}
+                      image_thumbnail:
+                        type: string
+                      country_code:
+                        type: string
+                        minLength: 1
+                      mobile: {}
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+                      account_status:
+                        type: number
+                    required:
+                      - username
+                      - public_key
+                      - memo_type
+                      - memo
+                      - first_name
+                      - last_name
+                      - middle_name
+                      - domain
+                      - image_thumbnail
+                      - country_code
+                      - latitude
+                      - longitude
+                      - account_status
+                required:
+                  - blockchain_info
+                  - user_info
+              examples:
+                User not found (user is not activated on the blockchain):
+                  value:
+                    blockchain_info:
+                      blockchain_status: 404
+                      blockchain_data:
+                        _links:
+                          self:
+                            href: ''
+                          transactions:
+                            href: ''
+                          operations:
+                            href: ''
+                          payments:
+                            href: ''
+                          effects:
+                            href: ''
+                          offers:
+                            href: ''
+                          trades:
+                            href: ''
+                          data:
+                            href: ''
+                        id: ''
+                        account_id: ''
+                        sequence: ''
+                        subentry_count: 0
+                        last_modified_ledger: 0
+                        last_modified_time: null
+                        thresholds:
+                          low_threshold: 0
+                          med_threshold: 0
+                          high_threshold: 0
+                        flags:
+                          auth_required: false
+                          auth_revocable: false
+                          auth_immutable: false
+                        balances: null
+                        signers: null
+                        data: null
+                        paging_token: ''
+                    user_info:
+                      username: jasmine
+                      public_key: GAHY2B2IBGFL7WWJMFBAWPZQ6D2F7TPUGDFV35GXUTR2WNXTOAGED6CM
+                      memo_type: ''
+                      memo: ''
+                      first_name: ''
+                      last_name: ''
+                      middle_name: ''
+                      domain: bantupay.org
+                      twitter: null
+                      email: null
+                      instagram: null
+                      ref_code: null
+                      image_thumbnail: ''
+                      country_code: NG
+                      mobile: null
+                      latitude: 7.1472
+                      longitude: 3.3505
+                      account_status: 0
+      operationId: get-user-account-info
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: type
+          description: 'Use type=public_key to reverse information on public_key, in which case “:username” must be a 56 character long public key. Default type is “username” and must contain domain name.'
+        - schema:
+            type: integer
+          in: query
+          name: blockchain_data
+          description: blockchain_data is optional query parameter. can be 0 or 1. default is 0
+      description: |-
+        When blockchain_data=1, then the “blockchain_status“ key in the response holds the status of the Blockchain Account. 200 means it is available on blockchain. 404 means it is not available (account not activated).
+
+        When 200, it will return the blockchain account detail. When blockchain_data=0 (default), “blockchain_status“ is 0. So, if you want to return the blockchain data of the bantu account information, you have to set the append flag to 1. “blockchain_status“ has these values: 0, 200, 404.
+    parameters:
+      - schema:
+          type: string
+        name: accountName
+        in: path
+        required: true
+        description: accountName can either be a username or 56 character long public key
+  /v1/user/payment:
+    post:
+      summary: Make payment
+      operationId: post-v1-user-payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: 'To make payment, you would have to generate an XDR code using the SDK'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                transaction_xdr:
+                  type: string
+                  minLength: 1
+                transaction_type:
+                  type: number
+                  description: '0 = payment (default), 1 = create_account transaction'
+              required:
+                - transaction_xdr
+                - transaction_type
+            examples:
+              Sample post request:
+                value:
+                  transaction_xdr: string
+                  transaction_type: 0
+        description: XDR is generated using SDK
+      tags:
+        - Payment
+  '/v1/user/payment/history/{accountName}':
+    get:
+      summary: Get user payment history
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  ops_records:
+                    type: object
+                    properties:
+                      _links:
+                        type: object
+                        properties:
+                          self:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                                minLength: 1
+                            required:
+                              - href
+                          next:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                                minLength: 1
+                            required:
+                              - href
+                          prev:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                                minLength: 1
+                            required:
+                              - href
+                        required:
+                          - self
+                          - next
+                          - prev
+                      _embedded:
+                        type: object
+                        properties:
+                          Records:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - destination_username
+                                - destination_first_name
+                                - destination_last_name
+                                - funder_last_name
+                                - funder_first_name
+                                - funder_username
+                                - destination_image_thumbnail
+                                - funder_image_thumbnail
+                                - amount
+                              properties:
+                                block_payment:
+                                  type: object
+                                  properties:
+                                    _links:
+                                      type: object
+                                      properties:
+                                        self:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        transaction:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        effects:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        succeeds:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        precedes:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                      required:
+                                        - self
+                                        - transaction
+                                        - effects
+                                        - succeeds
+                                        - precedes
+                                    id:
+                                      type: string
+                                      minLength: 1
+                                    paging_token:
+                                      type: string
+                                      minLength: 1
+                                    transaction_successful:
+                                      type: boolean
+                                    source_account:
+                                      type: string
+                                      minLength: 1
+                                    type:
+                                      type: string
+                                      minLength: 1
+                                    type_i:
+                                      type: number
+                                    created_at:
+                                      type: string
+                                      minLength: 1
+                                    transaction_hash:
+                                      type: string
+                                      minLength: 1
+                                    asset_type:
+                                      type: string
+                                      minLength: 1
+                                    from:
+                                      type: string
+                                      minLength: 1
+                                    to:
+                                      type: string
+                                      minLength: 1
+                                    amount:
+                                      type: string
+                                      minLength: 1
+                                  required:
+                                    - _links
+                                    - id
+                                    - paging_token
+                                    - transaction_successful
+                                    - source_account
+                                    - type
+                                    - type_i
+                                    - created_at
+                                    - transaction_hash
+                                    - asset_type
+                                    - from
+                                    - to
+                                    - amount
+                                block_transaction:
+                                  type: object
+                                  properties:
+                                    memo:
+                                      type: string
+                                      minLength: 1
+                                    memo_bytes:
+                                      type: string
+                                      minLength: 1
+                                    _links:
+                                      type: object
+                                      properties:
+                                        self:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        account:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        ledger:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        operations:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                            templated:
+                                              type: boolean
+                                          required:
+                                            - href
+                                            - templated
+                                        effects:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                            templated:
+                                              type: boolean
+                                          required:
+                                            - href
+                                            - templated
+                                        precedes:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        succeeds:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        transaction:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                      required:
+                                        - self
+                                        - account
+                                        - ledger
+                                        - operations
+                                        - effects
+                                        - precedes
+                                        - succeeds
+                                        - transaction
+                                    id:
+                                      type: string
+                                      minLength: 1
+                                    paging_token:
+                                      type: string
+                                      minLength: 1
+                                    successful:
+                                      type: boolean
+                                    hash:
+                                      type: string
+                                      minLength: 1
+                                    ledger:
+                                      type: number
+                                    created_at:
+                                      type: string
+                                      minLength: 1
+                                    source_account:
+                                      type: string
+                                      minLength: 1
+                                    source_account_sequence:
+                                      type: string
+                                      minLength: 1
+                                    fee_account:
+                                      type: string
+                                      minLength: 1
+                                    fee_charged:
+                                      type: string
+                                      minLength: 1
+                                    max_fee:
+                                      type: string
+                                      minLength: 1
+                                    operation_count:
+                                      type: number
+                                    envelope_xdr:
+                                      type: string
+                                      minLength: 1
+                                    result_xdr:
+                                      type: string
+                                      minLength: 1
+                                    result_meta_xdr:
+                                      type: string
+                                      minLength: 1
+                                    fee_meta_xdr:
+                                      type: string
+                                      minLength: 1
+                                    memo_type:
+                                      type: string
+                                      minLength: 1
+                                    signatures:
+                                      type: array
+                                      items:
+                                        required: []
+                                        properties: {}
+                                  required:
+                                    - memo
+                                    - memo_bytes
+                                    - _links
+                                    - id
+                                    - paging_token
+                                    - successful
+                                    - hash
+                                    - ledger
+                                    - created_at
+                                    - source_account
+                                    - source_account_sequence
+                                    - fee_account
+                                    - fee_charged
+                                    - max_fee
+                                    - operation_count
+                                    - envelope_xdr
+                                    - result_xdr
+                                    - result_meta_xdr
+                                    - fee_meta_xdr
+                                    - memo_type
+                                    - signatures
+                                destination_username:
+                                  type: string
+                                  minLength: 1
+                                destination_first_name:
+                                  type: string
+                                destination_last_name:
+                                  type: string
+                                funder_last_name:
+                                  type: string
+                                funder_first_name:
+                                  type: string
+                                funder_username:
+                                  type: string
+                                  minLength: 1
+                                destination_image_thumbnail:
+                                  type: string
+                                funder_image_thumbnail:
+                                  type: string
+                                amount:
+                                  type: string
+                                  minLength: 1
+                                asset_type:
+                                  type: object
+                                  properties:
+                                    asset_type:
+                                      type: string
+                                      minLength: 1
+                                    asset_code:
+                                      type: string
+                                      minLength: 1
+                                  required:
+                                    - asset_type
+                                    - asset_code
+                        required:
+                          - Records
+                    required:
+                      - _links
+                      - _embedded
+                required:
+                  - ops_records
+              examples:
+                payment history:
+                  value:
+                    ops_records:
+                      _links:
+                        self:
+                          href: accounts/GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK/payments?cursor=&limit=25&order=desc
+                        next:
+                          href: accounts/GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK/payments?cursor=904571652149249&limit=25&order=desc
+                        prev:
+                          href: accounts/GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK/payments?cursor=1521848646897665&limit=25&order=asc
+                      _embedded:
+                        Records:
+                          - block_payment:
+                              _links:
+                                self:
+                                  href: operations/1521848646897665
+                                transaction:
+                                  href: transactions/271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                                effects:
+                                  href: operations/1521848646897665/effects
+                                succeeds:
+                                  href: effects?order=desc&cursor=1521848646897665
+                                precedes:
+                                  href: effects?order=asc&cursor=1521848646897665
+                              id: '1521848646897665'
+                              paging_token: '1521848646897665'
+                              transaction_successful: true
+                              source_account: GAV34XRLCZLAUPRE73JCWHZ5T23AZXOTNYYJRAEHXKIDKIQXJQGQYC24
+                              type: payment
+                              type_i: 1
+                              created_at: '2020-10-06T19:08:59Z'
+                              transaction_hash: 271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                              asset_type: native
+                              from: GAV34XRLCZLAUPRE73JCWHZ5T23AZXOTNYYJRAEHXKIDKIQXJQGQYC24
+                              to: GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK
+                              amount: '500000.0000000'
+                            block_transaction:
+                              memo: chop money
+                              memo_bytes: Y2hvcCBtb25leQ==
+                              _links:
+                                self:
+                                  href: transactions/271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                                account:
+                                  href: accounts/GAV34XRLCZLAUPRE73JCWHZ5T23AZXOTNYYJRAEHXKIDKIQXJQGQYC24
+                                ledger:
+                                  href: ledgers/354333
+                                operations:
+                                  href: transactions/271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc/operations
+                                  templated: true
+                                effects:
+                                  href: transactions/271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc/effects
+                                  templated: true
+                                precedes:
+                                  href: transactions?order=asc&cursor=1521848646897664
+                                succeeds:
+                                  href: transactions?order=desc&cursor=1521848646897664
+                                transaction:
+                                  href: transactions/271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                              id: 271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                              paging_token: '1521848646897664'
+                              successful: true
+                              hash: 271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                              ledger: 354333
+                              created_at: '2020-10-06T19:08:59Z'
+                              source_account: GAV34XRLCZLAUPRE73JCWHZ5T23AZXOTNYYJRAEHXKIDKIQXJQGQYC24
+                              source_account_sequence: '534920996847620'
+                              fee_account: GAV34XRLCZLAUPRE73JCWHZ5T23AZXOTNYYJRAEHXKIDKIQXJQGQYC24
+                              fee_charged: '100'
+                              max_fee: '100'
+                              operation_count: 1
+                              envelope_xdr: AAAAAgAAAAArvl4rFlYKPiT+0isfPZ62DN3TbjCYgIe6kDUiF0wNDAAAAGQAAeaCAAAABAAAAAAAAAABAAAACmNob3AgbW9uZXkAAAAAAAEAAAAAAAAAAQAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAAAAAAAASMJzlQAAAAAAAAAAABF0wNDAAAAECl44hHxTZhSGa+P5ge8xqbTsiWWoQXukTtyxxJ/dvOG4OUdKZ/Bxvgmifa4vjEyPLw6/wRdRLQqCyA/5KB2hUO
+                              result_xdr: AAAAAAAAAGQAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAA=
+                              result_meta_xdr: AAAAAgAAAAIAAAADAAVoHQAAAAAAAAAAK75eKxZWCj4k/tIrHz2etgzd024wmICHupA1IhdMDQwAPZOmSn5evwAB5oIAAAADAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAAVoHQAAAAAAAAAAK75eKxZWCj4k/tIrHz2etgzd024wmICHupA1IhdMDQwAPZOmSn5evwAB5oIAAAAEAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAABAAAAAMAAzcJAAAAAAAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAAAOjIuU2cAAM2tAAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEABWgdAAAAAAAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAABXTv8p2cAAM2tAAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAMABWgdAAAAAAAAAAArvl4rFlYKPiT+0isfPZ62DN3TbjCYgIe6kDUiF0wNDAA9k6ZKfl6/AAHmggAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEABWgdAAAAAAAAAAArvl4rFlYKPiT+0isfPZ62DN3TbjCYgIe6kDUiF0wNDAA9jxojRQ6/AAHmggAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=
+                              fee_meta_xdr: AAAAAgAAAAMABWfkAAAAAAAAAAArvl4rFlYKPiT+0isfPZ62DN3TbjCYgIe6kDUiF0wNDAA9k6ZKfl8jAAHmggAAAAMAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEABWgdAAAAAAAAAAArvl4rFlYKPiT+0isfPZ62DN3TbjCYgIe6kDUiF0wNDAA9k6ZKfl6/AAHmggAAAAMAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA==
+                              memo_type: text
+                              signatures:
+                                - peOIR8U2YUhmvj+YHvMam07IllqEF7pE7cscSf3bzhuDlHSmfwcb4Jon2uL4xMjy8Ov8EXUS0KgsgP+SgdoVDg==
+                            destination_username: proxie*bantupay.org
+                            destination_first_name: ''
+                            destination_last_name: ''
+                            funder_last_name: ''
+                            funder_first_name: ''
+                            funder_username: muche*bantupay.org
+                            destination_image_thumbnail: ''
+                            funder_image_thumbnail: ''
+                            amount: '500000.0000000'
+                            asset_type:
+                              asset_type: native
+                              asset_code: XBN
+                          - block_payment:
+                              _links:
+                                self:
+                                  href: operations/904936724369409
+                                transaction:
+                                  href: transactions/1e20076579488c52dcba2e3b92dd2651e07a24fff8fc5b0d109f9b02ef7c7737
+                                effects:
+                                  href: operations/904936724369409/effects
+                                succeeds:
+                                  href: effects?order=desc&cursor=904936724369409
+                                precedes:
+                                  href: effects?order=asc&cursor=904936724369409
+                              id: '904936724369409'
+                              paging_token: '904936724369409'
+                              transaction_successful: true
+                              source_account: GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK
+                              type: create_account
+                              type_i: 0
+                              created_at: '2020-09-27T20:36:23Z'
+                              transaction_hash: 1e20076579488c52dcba2e3b92dd2651e07a24fff8fc5b0d109f9b02ef7c7737
+                              starting_balance: '20.0000000'
+                              funder: GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK
+                              account: GAOAYQLXKOMRFUDDM26FKDFE6VM72YBW6PE7YD65J74MCZXAPVSEWEYI
+                            block_transaction:
+                              _links:
+                                self:
+                                  href: transactions/1e20076579488c52dcba2e3b92dd2651e07a24fff8fc5b0d109f9b02ef7c7737
+                                account:
+                                  href: accounts/GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK
+                                ledger:
+                                  href: ledgers/210697
+                                operations:
+                                  href: transactions/1e20076579488c52dcba2e3b92dd2651e07a24fff8fc5b0d109f9b02ef7c7737/operations
+                                  templated: true
+                                effects:
+                                  href: transactions/1e20076579488c52dcba2e3b92dd2651e07a24fff8fc5b0d109f9b02ef7c7737/effects
+                                  templated: true
+                                precedes:
+                                  href: transactions?order=asc&cursor=904936724369408
+                                succeeds:
+                                  href: transactions?order=desc&cursor=904936724369408
+                                transaction:
+                                  href: transactions/1e20076579488c52dcba2e3b92dd2651e07a24fff8fc5b0d109f9b02ef7c7737
+                              id: 1e20076579488c52dcba2e3b92dd2651e07a24fff8fc5b0d109f9b02ef7c7737
+                              paging_token: '904936724369408'
+                              successful: true
+                              hash: 1e20076579488c52dcba2e3b92dd2651e07a24fff8fc5b0d109f9b02ef7c7737
+                              ledger: 210697
+                              created_at: '2020-09-27T20:36:23Z'
+                              source_account: GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK
+                              source_account_sequence: '904571652145153'
+                              fee_account: GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK
+                              fee_charged: '100'
+                              max_fee: '100'
+                              operation_count: 1
+                              envelope_xdr: AAAAAgAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAAAGQAAza0AAAAAQAAAAEAAAAAAAAAAAAAAABfcPfhAAAAAAAAAAEAAAAAAAAAAAAAAAAcDEF3U5kS0GNmvFUMpPVZ/WA288n8D91P+MFm4H1kSwAAAAAL68IAAAAAAAAAAAHGmpn3AAAAQMTxCpSOavCw4BX9XN1yUt83Jk3QJF6k8ZgeUuC+/8rcsKscAATMJE2SegDZAeMjy78p7rJN6kLORMF5l8WySQw=
+                              result_xdr: AAAAAAAAAGQAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=
+                              result_meta_xdr: AAAAAgAAAAIAAAADAAM3CQAAAAAAAAAAZn0RlJhRwbGImG4t5yy/dUUCYiPxBV1JCRITDcaamfcAAADo1KUPnAADNrQAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAAM3CQAAAAAAAAAAZn0RlJhRwbGImG4t5yy/dUUCYiPxBV1JCRITDcaamfcAAADo1KUPnAADNrQAAAABAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAAAwAAAAMAAzcJAAAAAAAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAAAOjUpQ+cAAM2tAAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAzcJAAAAAAAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAAAOjIuU2cAAM2tAAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAzcJAAAAAAAAAAAcDEF3U5kS0GNmvFUMpPVZ/WA288n8D91P+MFm4H1kSwAAAAAL68IAAAM3CQAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=
+                              fee_meta_xdr: AAAAAgAAAAMAAza0AAAAAAAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAAAOjUpRAAAAM2tAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAzcJAAAAAAAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAAAOjUpQ+cAAM2tAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA==
+                              memo_type: none
+                              signatures:
+                                - xPEKlI5q8LDgFf1c3XJS3zcmTdAkXqTxmB5S4L7/ytywqxwABMwkTZJ6ANkB4yPLvynusk3qQs5EwXmXxbJJDA==
+                              valid_after: '1970-01-01T00:00:00Z'
+                              valid_before: '2020-09-27T20:36:49Z'
+                            destination_username: api*bantupay.org
+                            destination_first_name: API
+                            destination_last_name: Docs
+                            funder_last_name: ''
+                            funder_first_name: ''
+                            funder_username: proxie*bantupay.org
+                            destination_image_thumbnail: ''
+                            funder_image_thumbnail: ''
+                            amount: '20.0000000'
+                            asset_type:
+                              asset_type: native
+                              asset_code: XBN
+                          - block_payment:
+                              _links:
+                                self:
+                                  href: operations/904571652149249
+                                transaction:
+                                  href: transactions/1c6098b5e2906a983b0e7347d8c0410d41d0fe4cba188b4dee15345525430f34
+                                effects:
+                                  href: operations/904571652149249/effects
+                                succeeds:
+                                  href: effects?order=desc&cursor=904571652149249
+                                precedes:
+                                  href: effects?order=asc&cursor=904571652149249
+                              id: '904571652149249'
+                              paging_token: '904571652149249'
+                              transaction_successful: true
+                              source_account: GCX2DB3UQSB3QYJ76ELVTKNWDGYRFNCOA2J5IODGU2NQ72U5N6GBANTU
+                              type: create_account
+                              type_i: 0
+                              created_at: '2020-09-27T20:28:51Z'
+                              transaction_hash: 1c6098b5e2906a983b0e7347d8c0410d41d0fe4cba188b4dee15345525430f34
+                              starting_balance: '100000.0000000'
+                              funder: GCX2DB3UQSB3QYJ76ELVTKNWDGYRFNCOA2J5IODGU2NQ72U5N6GBANTU
+                              account: GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK
+                            block_transaction:
+                              memo: Activation for proxie
+                              memo_bytes: QWN0aXZhdGlvbiBmb3IgcHJveGll
+                              _links:
+                                self:
+                                  href: transactions/1c6098b5e2906a983b0e7347d8c0410d41d0fe4cba188b4dee15345525430f34
+                                account:
+                                  href: accounts/GCX2DB3UQSB3QYJ76ELVTKNWDGYRFNCOA2J5IODGU2NQ72U5N6GBANTU
+                                ledger:
+                                  href: ledgers/210612
+                                operations:
+                                  href: transactions/1c6098b5e2906a983b0e7347d8c0410d41d0fe4cba188b4dee15345525430f34/operations
+                                  templated: true
+                                effects:
+                                  href: transactions/1c6098b5e2906a983b0e7347d8c0410d41d0fe4cba188b4dee15345525430f34/effects
+                                  templated: true
+                                precedes:
+                                  href: transactions?order=asc&cursor=904571652149248
+                                succeeds:
+                                  href: transactions?order=desc&cursor=904571652149248
+                                transaction:
+                                  href: transactions/1c6098b5e2906a983b0e7347d8c0410d41d0fe4cba188b4dee15345525430f34
+                              id: 1c6098b5e2906a983b0e7347d8c0410d41d0fe4cba188b4dee15345525430f34
+                              paging_token: '904571652149248'
+                              successful: true
+                              hash: 1c6098b5e2906a983b0e7347d8c0410d41d0fe4cba188b4dee15345525430f34
+                              ledger: 210612
+                              created_at: '2020-09-27T20:28:51Z'
+                              source_account: GCX2DB3UQSB3QYJ76ELVTKNWDGYRFNCOA2J5IODGU2NQ72U5N6GBANTU
+                              source_account_sequence: '533263139471363'
+                              fee_account: GCX2DB3UQSB3QYJ76ELVTKNWDGYRFNCOA2J5IODGU2NQ72U5N6GBANTU
+                              fee_charged: '100'
+                              max_fee: '100'
+                              operation_count: 1
+                              envelope_xdr: AAAAAgAAAACvoYd0hIO4YT/xF1mpthmxErROBpPUOGammw/qnW+MEAAAAGQAAeUAAAAAAwAAAAEAAAAAAAAAAAAAAABfcPYdAAAAAQAAABVBY3RpdmF0aW9uIGZvciBwcm94aWUAAAAAAAABAAAAAAAAAAAAAAAAZn0RlJhRwbGImG4t5yy/dUUCYiPxBV1JCRITDcaamfcAAADo1KUQAAAAAAAAAAABnW+MEAAAAEBvhaHMmzNWMEzGU/fpoBzu9nbBOHU78SB8WpILHQedtwEMf3Af0gkrw21n0AfNNgCeuhVPzUgh+ngm6IzKp1oJ
+                              result_xdr: AAAAAAAAAGQAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=
+                              result_meta_xdr: AAAAAgAAAAIAAAADAAM2tAAAAAAAAAAAr6GHdISDuGE/8RdZqbYZsRK0TgaT1DhmppsP6p1vjBAANVycRIa+1AAB5QAAAAACAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAAM2tAAAAAAAAAAAr6GHdISDuGE/8RdZqbYZsRK0TgaT1DhmppsP6p1vjBAANVycRIa+1AAB5QAAAAADAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAAAwAAAAMAAza0AAAAAAAAAACvoYd0hIO4YT/xF1mpthmxErROBpPUOGammw/qnW+MEAA1XJxEhr7UAAHlAAAAAAMAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAza0AAAAAAAAAACvoYd0hIO4YT/xF1mpthmxErROBpPUOGammw/qnW+MEAA1W7Nv4a7UAAHlAAAAAAMAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAza0AAAAAAAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAAAOjUpRAAAAM2tAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=
+                              fee_meta_xdr: AAAAAgAAAAMAAnbmAAAAAAAAAACvoYd0hIO4YT/xF1mpthmxErROBpPUOGammw/qnW+MEAA1XJxEhr84AAHlAAAAAAIAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAza0AAAAAAAAAACvoYd0hIO4YT/xF1mpthmxErROBpPUOGammw/qnW+MEAA1XJxEhr7UAAHlAAAAAAIAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA==
+                              memo_type: text
+                              signatures:
+                                - b4WhzJszVjBMxlP36aAc7vZ2wTh1O/EgfFqSCx0HnbcBDH9wH9IJK8NtZ9AHzTYAnroVT81IIfp4JuiMyqdaCQ==
+                              valid_after: '1970-01-01T00:00:00Z'
+                              valid_before: '2020-09-27T20:29:17Z'
+                            destination_username: proxie*bantupay.org
+                            destination_first_name: ''
+                            destination_last_name: ''
+                            funder_last_name: Richards
+                            funder_first_name: Ric
+                            funder_username: richardsric7*bantupay.org
+                            destination_image_thumbnail: ''
+                            funder_image_thumbnail: ''
+                            amount: '100000.0000000'
+                            asset_type:
+                              asset_type: native
+                              asset_code: XBN
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  error:
+                    type: string
+                    minLength: 1
+                required:
+                  - error
+              examples:
+                record not found:
+                  value:
+                    error: record not found
+      operationId: get-user-payment-history
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: limit
+          description: set to how many records you want to see
+      description: Get user payment history
+    parameters:
+      - schema:
+          type: string
+        name: accountName
+        in: path
+        required: true
+        description: accountName can either be a username or 56 character long public key
+  '/v1/user/payment/notifications/{accountName}/{lastTransactionID}':
+    get:
+      summary: Get payment notification
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  transactions:
+                    type: object
+                    properties:
+                      _links:
+                        type: object
+                        properties:
+                          self:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                                minLength: 1
+                            required:
+                              - href
+                          next:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                                minLength: 1
+                            required:
+                              - href
+                          prev:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                                minLength: 1
+                            required:
+                              - href
+                        required:
+                          - self
+                          - next
+                          - prev
+                      _embedded:
+                        type: object
+                        properties:
+                          Records:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - destination_username
+                                - destination_first_name
+                                - destination_last_name
+                                - funder_last_name
+                                - funder_first_name
+                                - funder_username
+                                - destination_image_thumbnail
+                                - funder_image_thumbnail
+                                - amount
+                              properties:
+                                block_payment:
+                                  type: object
+                                  properties:
+                                    _links:
+                                      type: object
+                                      properties:
+                                        self:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        transaction:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        effects:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        succeeds:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        precedes:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                      required:
+                                        - self
+                                        - transaction
+                                        - effects
+                                        - succeeds
+                                        - precedes
+                                    id:
+                                      type: string
+                                      minLength: 1
+                                    paging_token:
+                                      type: string
+                                      minLength: 1
+                                    transaction_successful:
+                                      type: boolean
+                                    source_account:
+                                      type: string
+                                      minLength: 1
+                                    type:
+                                      type: string
+                                      minLength: 1
+                                    type_i:
+                                      type: number
+                                    created_at:
+                                      type: string
+                                      minLength: 1
+                                    transaction_hash:
+                                      type: string
+                                      minLength: 1
+                                    asset_type:
+                                      type: string
+                                      minLength: 1
+                                    from:
+                                      type: string
+                                      minLength: 1
+                                    to:
+                                      type: string
+                                      minLength: 1
+                                    amount:
+                                      type: string
+                                      minLength: 1
+                                  required:
+                                    - _links
+                                    - id
+                                    - paging_token
+                                    - transaction_successful
+                                    - source_account
+                                    - type
+                                    - type_i
+                                    - created_at
+                                    - transaction_hash
+                                    - asset_type
+                                    - from
+                                    - to
+                                    - amount
+                                block_transaction:
+                                  type: object
+                                  properties:
+                                    memo:
+                                      type: string
+                                      minLength: 1
+                                    memo_bytes:
+                                      type: string
+                                      minLength: 1
+                                    _links:
+                                      type: object
+                                      properties:
+                                        self:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        account:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        ledger:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        operations:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                            templated:
+                                              type: boolean
+                                          required:
+                                            - href
+                                            - templated
+                                        effects:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                            templated:
+                                              type: boolean
+                                          required:
+                                            - href
+                                            - templated
+                                        precedes:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        succeeds:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                        transaction:
+                                          type: object
+                                          properties:
+                                            href:
+                                              type: string
+                                              minLength: 1
+                                          required:
+                                            - href
+                                      required:
+                                        - self
+                                        - account
+                                        - ledger
+                                        - operations
+                                        - effects
+                                        - precedes
+                                        - succeeds
+                                        - transaction
+                                    id:
+                                      type: string
+                                      minLength: 1
+                                    paging_token:
+                                      type: string
+                                      minLength: 1
+                                    successful:
+                                      type: boolean
+                                    hash:
+                                      type: string
+                                      minLength: 1
+                                    ledger:
+                                      type: number
+                                    created_at:
+                                      type: string
+                                      minLength: 1
+                                    source_account:
+                                      type: string
+                                      minLength: 1
+                                    source_account_sequence:
+                                      type: string
+                                      minLength: 1
+                                    fee_account:
+                                      type: string
+                                      minLength: 1
+                                    fee_charged:
+                                      type: string
+                                      minLength: 1
+                                    max_fee:
+                                      type: string
+                                      minLength: 1
+                                    operation_count:
+                                      type: number
+                                    envelope_xdr:
+                                      type: string
+                                      minLength: 1
+                                    result_xdr:
+                                      type: string
+                                      minLength: 1
+                                    result_meta_xdr:
+                                      type: string
+                                      minLength: 1
+                                    fee_meta_xdr:
+                                      type: string
+                                      minLength: 1
+                                    memo_type:
+                                      type: string
+                                      minLength: 1
+                                    signatures:
+                                      type: array
+                                      items:
+                                        required: []
+                                        properties: {}
+                                  required:
+                                    - memo
+                                    - memo_bytes
+                                    - _links
+                                    - id
+                                    - paging_token
+                                    - successful
+                                    - hash
+                                    - ledger
+                                    - created_at
+                                    - source_account
+                                    - source_account_sequence
+                                    - fee_account
+                                    - fee_charged
+                                    - max_fee
+                                    - operation_count
+                                    - envelope_xdr
+                                    - result_xdr
+                                    - result_meta_xdr
+                                    - fee_meta_xdr
+                                    - memo_type
+                                    - signatures
+                                destination_username:
+                                  type: string
+                                  minLength: 1
+                                destination_first_name:
+                                  type: string
+                                destination_last_name:
+                                  type: string
+                                funder_last_name:
+                                  type: string
+                                funder_first_name:
+                                  type: string
+                                funder_username:
+                                  type: string
+                                  minLength: 1
+                                destination_image_thumbnail:
+                                  type: string
+                                funder_image_thumbnail:
+                                  type: string
+                                amount:
+                                  type: string
+                                  minLength: 1
+                                asset_type:
+                                  type: object
+                                  properties:
+                                    asset_type:
+                                      type: string
+                                      minLength: 1
+                                    asset_code:
+                                      type: string
+                                      minLength: 1
+                                  required:
+                                    - asset_type
+                                    - asset_code
+                        required:
+                          - Records
+                    required:
+                      - _links
+                      - _embedded
+                required:
+                  - transactions
+              examples:
+                Sample response:
+                  value:
+                    transactions:
+                      _links:
+                        self:
+                          href: accounts/GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK/payments?cursor=&limit=25&order=desc
+                        next:
+                          href: accounts/GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK/payments?cursor=904571652149249&limit=25&order=desc
+                        prev:
+                          href: accounts/GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK/payments?cursor=1521848646897665&limit=25&order=asc
+                      _embedded:
+                        Records:
+                          - block_payment:
+                              _links:
+                                self:
+                                  href: operations/1521848646897665
+                                transaction:
+                                  href: transactions/271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                                effects:
+                                  href: operations/1521848646897665/effects
+                                succeeds:
+                                  href: effects?order=desc&cursor=1521848646897665
+                                precedes:
+                                  href: effects?order=asc&cursor=1521848646897665
+                              id: '1521848646897665'
+                              paging_token: '1521848646897665'
+                              transaction_successful: true
+                              source_account: GAV34XRLCZLAUPRE73JCWHZ5T23AZXOTNYYJRAEHXKIDKIQXJQGQYC24
+                              type: payment
+                              type_i: 1
+                              created_at: '2020-10-06T19:08:59Z'
+                              transaction_hash: 271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                              asset_type: native
+                              from: GAV34XRLCZLAUPRE73JCWHZ5T23AZXOTNYYJRAEHXKIDKIQXJQGQYC24
+                              to: GBTH2EMUTBI4DMMITBXC3ZZMX52UKATCEPYQKXKJBEJBGDOGTKM7OTYK
+                              amount: '500000.0000000'
+                            block_transaction:
+                              memo: chop money
+                              memo_bytes: Y2hvcCBtb25leQ==
+                              _links:
+                                self:
+                                  href: transactions/271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                                account:
+                                  href: accounts/GAV34XRLCZLAUPRE73JCWHZ5T23AZXOTNYYJRAEHXKIDKIQXJQGQYC24
+                                ledger:
+                                  href: ledgers/354333
+                                operations:
+                                  href: transactions/271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc/operations
+                                  templated: true
+                                effects:
+                                  href: transactions/271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc/effects
+                                  templated: true
+                                precedes:
+                                  href: transactions?order=asc&cursor=1521848646897664
+                                succeeds:
+                                  href: transactions?order=desc&cursor=1521848646897664
+                                transaction:
+                                  href: transactions/271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                              id: 271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                              paging_token: '1521848646897664'
+                              successful: true
+                              hash: 271211cf82d6d8d07d823fc4505e952cbedb97c3ac3a6fbd43529eaad7ca7bdc
+                              ledger: 354333
+                              created_at: '2020-10-06T19:08:59Z'
+                              source_account: GAV34XRLCZLAUPRE73JCWHZ5T23AZXOTNYYJRAEHXKIDKIQXJQGQYC24
+                              source_account_sequence: '534920996847620'
+                              fee_account: GAV34XRLCZLAUPRE73JCWHZ5T23AZXOTNYYJRAEHXKIDKIQXJQGQYC24
+                              fee_charged: '100'
+                              max_fee: '100'
+                              operation_count: 1
+                              envelope_xdr: AAAAAgAAAAArvl4rFlYKPiT+0isfPZ62DN3TbjCYgIe6kDUiF0wNDAAAAGQAAeaCAAAABAAAAAAAAAABAAAACmNob3AgbW9uZXkAAAAAAAEAAAAAAAAAAQAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAAAAAAAASMJzlQAAAAAAAAAAABF0wNDAAAAECl44hHxTZhSGa+P5ge8xqbTsiWWoQXukTtyxxJ/dvOG4OUdKZ/Bxvgmifa4vjEyPLw6/wRdRLQqCyA/5KB2hUO
+                              result_xdr: AAAAAAAAAGQAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAA=
+                              result_meta_xdr: AAAAAgAAAAIAAAADAAVoHQAAAAAAAAAAK75eKxZWCj4k/tIrHz2etgzd024wmICHupA1IhdMDQwAPZOmSn5evwAB5oIAAAADAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAAVoHQAAAAAAAAAAK75eKxZWCj4k/tIrHz2etgzd024wmICHupA1IhdMDQwAPZOmSn5evwAB5oIAAAAEAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAABAAAAAMAAzcJAAAAAAAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAAAOjIuU2cAAM2tAAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEABWgdAAAAAAAAAABmfRGUmFHBsYiYbi3nLL91RQJiI/EFXUkJEhMNxpqZ9wAABXTv8p2cAAM2tAAAAAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAMABWgdAAAAAAAAAAArvl4rFlYKPiT+0isfPZ62DN3TbjCYgIe6kDUiF0wNDAA9k6ZKfl6/AAHmggAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEABWgdAAAAAAAAAAArvl4rFlYKPiT+0isfPZ62DN3TbjCYgIe6kDUiF0wNDAA9jxojRQ6/AAHmggAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=
+                              fee_meta_xdr: AAAAAgAAAAMABWfkAAAAAAAAAAArvl4rFlYKPiT+0isfPZ62DN3TbjCYgIe6kDUiF0wNDAA9k6ZKfl8jAAHmggAAAAMAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEABWgdAAAAAAAAAAArvl4rFlYKPiT+0isfPZ62DN3TbjCYgIe6kDUiF0wNDAA9k6ZKfl6/AAHmggAAAAMAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA==
+                              memo_type: text
+                              signatures:
+                                - peOIR8U2YUhmvj+YHvMam07IllqEF7pE7cscSf3bzhuDlHSmfwcb4Jon2uL4xMjy8Ov8EXUS0KgsgP+SgdoVDg==
+                            destination_username: proxie*bantupay.org
+                            destination_first_name: ''
+                            destination_last_name: ''
+                            funder_last_name: ''
+                            funder_first_name: ''
+                            funder_username: muche*bantupay.org
+                            destination_image_thumbnail: ''
+                            funder_image_thumbnail: ''
+                            amount: '500000.0000000'
+                            asset_type:
+                              asset_type: native
+                              asset_code: XBN
+      operationId: get-v1-user-payment-notifications
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: limit
+      description: This returns the payments after the transaction that was passed in.
+    parameters:
+      - schema:
+          type: string
+        name: accountName
+        in: path
+        required: true
+        description: accountName can either be a username or 56 character long public key
+      - schema:
+          type: string
+        name: lastTransactionID
+        in: path
+        required: true
+        description: transaction ID of the last payment made
+  /v1/currency/rates:
+    get:
+      summary: Get local currency rates
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  rates:
+                    type: object
+                    properties:
+                      AED:
+                        type: number
+                      AFN:
+                        type: number
+                      ALL:
+                        type: number
+                      AMD:
+                        type: number
+                      ANG:
+                        type: number
+                      AOA:
+                        type: number
+                      ARS:
+                        type: number
+                      AUD:
+                        type: number
+                      AWG:
+                        type: number
+                      AZN:
+                        type: number
+                      BAM:
+                        type: number
+                      BBD:
+                        type: number
+                      BDT:
+                        type: number
+                      BGN:
+                        type: number
+                      BHD:
+                        type: number
+                      BIF:
+                        type: number
+                      BMD:
+                        type: number
+                      BND:
+                        type: number
+                      BOB:
+                        type: number
+                      BRL:
+                        type: number
+                      BSD:
+                        type: number
+                      BTC:
+                        type: number
+                      BTN:
+                        type: number
+                      BWP:
+                        type: number
+                      BYN:
+                        type: number
+                      BZD:
+                        type: number
+                      CAD:
+                        type: number
+                      CDF:
+                        type: number
+                      CHF:
+                        type: number
+                      CLF:
+                        type: number
+                      CLP:
+                        type: number
+                      CNH:
+                        type: number
+                      CNY:
+                        type: number
+                      COP:
+                        type: number
+                      CRC:
+                        type: number
+                      CUC:
+                        type: number
+                      CUP:
+                        type: number
+                      CVE:
+                        type: number
+                      CZK:
+                        type: number
+                      DANGOTE:
+                        type: number
+                      DJF:
+                        type: number
+                      DKK:
+                        type: number
+                      DOP:
+                        type: number
+                      DZD:
+                        type: number
+                      EGP:
+                        type: number
+                      ERN:
+                        type: number
+                      ETB:
+                        type: number
+                      EUR:
+                        type: number
+                      FJD:
+                        type: number
+                      FKP:
+                        type: number
+                      GBP:
+                        type: number
+                      GEL:
+                        type: number
+                      GGP:
+                        type: number
+                      GHS:
+                        type: number
+                      GIP:
+                        type: number
+                      GLD:
+                        type: number
+                      GMD:
+                        type: number
+                      GNF:
+                        type: number
+                      GTQ:
+                        type: number
+                      GYD:
+                        type: number
+                      HKD:
+                        type: number
+                      HNL:
+                        type: number
+                      HRK:
+                        type: number
+                      HTG:
+                        type: number
+                      HUF:
+                        type: number
+                      IDR:
+                        type: number
+                      ILS:
+                        type: number
+                      IMP:
+                        type: number
+                      INR:
+                        type: number
+                      INTERSTELLAR:
+                        type: number
+                      IQD:
+                        type: number
+                      IRR:
+                        type: number
+                      ISK:
+                        type: number
+                      JEP:
+                        type: number
+                      JMD:
+                        type: number
+                      JOD:
+                        type: number
+                      JPY:
+                        type: number
+                      KES:
+                        type: number
+                      KGS:
+                        type: number
+                      KHR:
+                        type: number
+                      KMF:
+                        type: number
+                      KPW:
+                        type: number
+                      KRW:
+                        type: number
+                      KWD:
+                        type: number
+                      KYD:
+                        type: number
+                      KZT:
+                        type: number
+                      LAK:
+                        type: number
+                      LBP:
+                        type: number
+                      LKR:
+                        type: number
+                      LRD:
+                        type: number
+                      LSL:
+                        type: number
+                      LUMI:
+                        type: number
+                      LYD:
+                        type: number
+                      MAD:
+                        type: number
+                      MDL:
+                        type: number
+                      MGA:
+                        type: number
+                      MKD:
+                        type: number
+                      MMK:
+                        type: number
+                      MNT:
+                        type: number
+                      MOP:
+                        type: number
+                      MRO:
+                        type: number
+                      MRU:
+                        type: number
+                      MUR:
+                        type: number
+                      MVR:
+                        type: number
+                      MWK:
+                        type: number
+                      MXN:
+                        type: number
+                      MYR:
+                        type: number
+                      MZN:
+                        type: number
+                      NAD:
+                        type: number
+                      NGN:
+                        type: number
+                      NGNB:
+                        type: number
+                      NGNS:
+                        type: number
+                      NIO:
+                        type: number
+                      NOK:
+                        type: number
+                      NPR:
+                        type: number
+                      NZD:
+                        type: number
+                      OMR:
+                        type: number
+                      PAB:
+                        type: number
+                      PEN:
+                        type: number
+                      PGK:
+                        type: number
+                      PHP:
+                        type: number
+                      PKR:
+                        type: number
+                      PLN:
+                        type: number
+                      PYG:
+                        type: number
+                      QAR:
+                        type: number
+                      RICE:
+                        type: number
+                      RON:
+                        type: number
+                      RSD:
+                        type: number
+                      RUB:
+                        type: number
+                      RWF:
+                        type: number
+                      SAR:
+                        type: number
+                      SBD:
+                        type: number
+                      SCR:
+                        type: number
+                      SDG:
+                        type: number
+                      SEK:
+                        type: number
+                      SGD:
+                        type: number
+                      SHP:
+                        type: number
+                      SLL:
+                        type: number
+                      SOS:
+                        type: number
+                      SRD:
+                        type: number
+                      SSP:
+                        type: number
+                      STD:
+                        type: number
+                      STN:
+                        type: number
+                      SVC:
+                        type: number
+                      SYP:
+                        type: number
+                      SZL:
+                        type: number
+                      THB:
+                        type: number
+                      TJS:
+                        type: number
+                      TMT:
+                        type: number
+                      TND:
+                        type: number
+                      TOP:
+                        type: number
+                      TRY:
+                        type: number
+                      TTD:
+                        type: number
+                      TWD:
+                        type: number
+                      TZS:
+                        type: number
+                      UAH:
+                        type: number
+                      UGX:
+                        type: number
+                      USD:
+                        type: number
+                      USDB:
+                        type: number
+                      UYU:
+                        type: number
+                      UZS:
+                        type: number
+                      VEF:
+                        type: number
+                      VERVE:
+                        type: number
+                      VES:
+                        type: number
+                      VND:
+                        type: number
+                      VUV:
+                        type: number
+                      WST:
+                        type: number
+                      XAF:
+                        type: number
+                      XAFB:
+                        type: number
+                      XAG:
+                        type: number
+                      XAU:
+                        type: number
+                      XBN:
+                        type: number
+                      XCD:
+                        type: number
+                      XDR:
+                        type: number
+                      XOF:
+                        type: number
+                      XPD:
+                        type: number
+                      XPF:
+                        type: number
+                      XPT:
+                        type: number
+                      YAM:
+                        type: number
+                      YER:
+                        type: number
+                      ZAR:
+                        type: number
+                      ZMW:
+                        type: number
+                      ZWL:
+                        type: number
+                    required:
+                      - AED
+                      - AFN
+                      - ALL
+                      - AMD
+                      - ANG
+                      - AOA
+                      - ARS
+                      - AUD
+                      - AWG
+                      - AZN
+                      - BAM
+                      - BBD
+                      - BDT
+                      - BGN
+                      - BHD
+                      - BIF
+                      - BMD
+                      - BND
+                      - BOB
+                      - BRL
+                      - BSD
+                      - BTC
+                      - BTN
+                      - BWP
+                      - BYN
+                      - BZD
+                      - CAD
+                      - CDF
+                      - CHF
+                      - CLF
+                      - CLP
+                      - CNH
+                      - CNY
+                      - COP
+                      - CRC
+                      - CUC
+                      - CUP
+                      - CVE
+                      - CZK
+                      - DANGOTE
+                      - DJF
+                      - DKK
+                      - DOP
+                      - DZD
+                      - EGP
+                      - ERN
+                      - ETB
+                      - EUR
+                      - FJD
+                      - FKP
+                      - GBP
+                      - GEL
+                      - GGP
+                      - GHS
+                      - GIP
+                      - GLD
+                      - GMD
+                      - GNF
+                      - GTQ
+                      - GYD
+                      - HKD
+                      - HNL
+                      - HRK
+                      - HTG
+                      - HUF
+                      - IDR
+                      - ILS
+                      - IMP
+                      - INR
+                      - INTERSTELLAR
+                      - IQD
+                      - IRR
+                      - ISK
+                      - JEP
+                      - JMD
+                      - JOD
+                      - JPY
+                      - KES
+                      - KGS
+                      - KHR
+                      - KMF
+                      - KPW
+                      - KRW
+                      - KWD
+                      - KYD
+                      - KZT
+                      - LAK
+                      - LBP
+                      - LKR
+                      - LRD
+                      - LSL
+                      - LUMI
+                      - LYD
+                      - MAD
+                      - MDL
+                      - MGA
+                      - MKD
+                      - MMK
+                      - MNT
+                      - MOP
+                      - MRO
+                      - MRU
+                      - MUR
+                      - MVR
+                      - MWK
+                      - MXN
+                      - MYR
+                      - MZN
+                      - NAD
+                      - NGN
+                      - NGNB
+                      - NGNS
+                      - NIO
+                      - NOK
+                      - NPR
+                      - NZD
+                      - OMR
+                      - PAB
+                      - PEN
+                      - PGK
+                      - PHP
+                      - PKR
+                      - PLN
+                      - PYG
+                      - QAR
+                      - RICE
+                      - RON
+                      - RSD
+                      - RUB
+                      - RWF
+                      - SAR
+                      - SBD
+                      - SCR
+                      - SDG
+                      - SEK
+                      - SGD
+                      - SHP
+                      - SLL
+                      - SOS
+                      - SRD
+                      - SSP
+                      - STD
+                      - STN
+                      - SVC
+                      - SYP
+                      - SZL
+                      - THB
+                      - TJS
+                      - TMT
+                      - TND
+                      - TOP
+                      - TRY
+                      - TTD
+                      - TWD
+                      - TZS
+                      - UAH
+                      - UGX
+                      - USD
+                      - USDB
+                      - UYU
+                      - UZS
+                      - VEF
+                      - VERVE
+                      - VES
+                      - VND
+                      - VUV
+                      - WST
+                      - XAF
+                      - XAFB
+                      - XAG
+                      - XAU
+                      - XBN
+                      - XCD
+                      - XDR
+                      - XOF
+                      - XPD
+                      - XPF
+                      - XPT
+                      - YAM
+                      - YER
+                      - ZAR
+                      - ZMW
+                      - ZWL
+                required:
+                  - rates
+              examples:
+                Sample response:
+                  value:
+                    rates:
+                      AED: 3.673
+                      AFN: 76.800005
+                      ALL: 105.483355
+                      AMD: 481.616228
+                      ANG: 1.79479
+                      AOA: 633.71
+                      ARS: 77.1045
+                      AUD: 1.400128
+                      AWG: 1.8
+                      AZN: 1.7025
+                      BAM: 1.6631
+                      BBD: 2
+                      BDT: 84.784888
+                      BGN: 1.66172
+                      BHD: 0.376741
+                      BIF: 1935
+                      BMD: 1
+                      BND: 1.359234
+                      BOB: 6.904164
+                      BRL: 5.592199
+                      BSD: 1
+                      BTC: 0.000093991083
+                      BTN: 73.282728
+                      BWP: 11.519411
+                      BYN: 2.622925
+                      BZD: 2.01545
+                      CAD: 1.32646
+                      CDF: 1965.5
+                      CHF: 0.916906
+                      CLF: 0.028815
+                      CLP: 795.099382
+                      CNH: 6.734977
+                      CNY: 6.7905
+                      COP: 3842.34
+                      CRC: 601.990695
+                      CUC: 0.999987
+                      CUP: 25.75
+                      CVE: 94.18
+                      CZK: 23.029732
+                      DANGOTE: 1.01
+                      DJF: 178
+                      DKK: 6.324554
+                      DOP: 58.44
+                      DZD: 128.935322
+                      EGP: 15.7175
+                      ERN: 15.000006
+                      ETB: 37.01968
+                      EUR: 0.849843
+                      FJD: 2.1268
+                      FKP: 0.774071
+                      GBP: 0.774071
+                      GEL: 3.21
+                      GGP: 0.774071
+                      GHS: 5.8
+                      GIP: 0.774071
+                      GLD: 1861.33
+                      GMD: 51.8
+                      GNF: 9750
+                      GTQ: 7.779067
+                      GYD: 209.189532
+                      HKD: 7.750025
+                      HNL: 24.616183
+                      HRK: 6.4317
+                      HTG: 63.092734
+                      HUF: 304.966627
+                      IDR: 14737.05
+                      ILS: 3.40375
+                      IMP: 0.774071
+                      INR: 73.364956
+                      INTERSTELLAR: 0.77
+                      IQD: 1190
+                      IRR: 42105
+                      ISK: 138.35
+                      JEP: 0.774071
+                      JMD: 143.328099
+                      JOD: 0.709
+                      JPY: 105.98996154
+                      KES: 108.51
+                      KGS: 79.383349
+                      KHR: 4102
+                      KMF: 418.600229
+                      KPW: 900
+                      KRW: 1158.035
+                      KWD: 0.306109
+                      KYD: 0.833238
+                      KZT: 429.390606
+                      LAK: 9229
+                      LBP: 1519
+                      LKR: 184.475582
+                      LRD: 198.649954
+                      LSL: 16.63
+                      LUMI: 1.0002
+                      LYD: 1.36818
+                      MAD: 9.2555
+                      MDL: 16.854973
+                      MGA: 3892.039014
+                      MKD: 52.393038
+                      MMK: 1297.765373
+                      MNT: 2863.231447
+                      MOP: 7.981191
+                      MRO: 357
+                      MRU: 37
+                      MUR: 39.75
+                      MVR: 15.4
+                      MWK: 751.27991
+                      MXN: 21.496939
+                      MYR: 4.1575
+                      MZN: 72.475008
+                      NAD: 18.105
+                      NGN: 384.95
+                      NGNB: 0.9998
+                      NGNS: 0.998
+                      NIO: 34.826085
+                      NOK: 9.297414
+                      NPR: 117.251256
+                      NZD: 1.518962
+                      OMR: 0.384998
+                      PAB: 1
+                      PEN: 3.591
+                      PGK: 3.498316
+                      PHP: 48.478643
+                      PKR: 164.4
+                      PLN: 3.808317
+                      PYG: 7000.442422
+                      QAR: 3.640554
+                      RICE: 1.0002
+                      RON: 4.1416
+                      RSD: 99.925
+                      RUB: 78.1454
+                      RWF: 976.491713
+                      SAR: 3.750818
+                      SBD: 8.166667
+                      SCR: 18.099349
+                      SDG: 55.325
+                      SEK: 8.87809
+                      SGD: 1.359333
+                      SHP: 0.774071
+                      SLL: 9809.999858
+                      SOS: 578.393995
+                      SRD: 14.154
+                      SSP: 130.26
+                      STD: 21031.906016
+                      STN: 20.95
+                      SVC: 8.749038
+                      SYP: 511.87359
+                      SZL: 16.63
+                      THB: 31.213
+                      TJS: 10.318746
+                      TMT: 3.5
+                      TND: 2.76
+                      TOP: 2.312746
+                      TRY: 7.88465
+                      TTD: 6.768026
+                      TWD: 28.676286
+                      TZS: 2319.725226
+                      UAH: 28.329145
+                      UGX: 3699.518586
+                      USD: 1
+                      USDB: 1.0001
+                      UYU: 42.504956
+                      UZS: 10349.838236
+                      VEF: 248487.642241
+                      VERVE: 1.0004
+                      VES: 437430.678484
+                      VND: 23188.926851
+                      VUV: 113.267646
+                      WST: 2.637196
+                      XAF: 557.460217
+                      XAFB: 0.9999
+                      XAG: 0.0421168
+                      XAU: 0.0005303
+                      XBN: 0.0035096
+                      XCD: 2.70255
+                      XDR: 0.708402
+                      XOF: 557.460217
+                      XPD: 0.00042224
+                      XPF: 101.413201
+                      XPT: 0.00115475
+                      YAM: 1.02
+                      YER: 250.399984
+                      ZAR: 16.655483
+                      ZMW: 20.072618
+                      ZWL: 322
+      operationId: get-v1-currency-rates
+      description: Returns local currency rates
+  '/v1/organization/list/{catID}':
+    get:
+      summary: Get list of organization by category ID
+      tags:
+        - Organization
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - id
+                        - category
+                      properties:
+                        id:
+                          type: number
+                        category:
+                          type: string
+                          minLength: 1
+                  organizations:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - id
+                        - name
+                        - address
+                        - email
+                        - service_description
+                        - industry_category_id
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                          minLength: 1
+                        address:
+                          type: string
+                          minLength: 1
+                        city: {}
+                        region: {}
+                        country: {}
+                        website: {}
+                        phone_number: {}
+                        email:
+                          type: string
+                          minLength: 1
+                        service_description:
+                          type: string
+                          minLength: 1
+                        longitude: {}
+                        latitude: {}
+                        industry_category_id:
+                          type: number
+                required:
+                  - categories
+                  - organizations
+              examples:
+                Sample response:
+                  value:
+                    categories:
+                      - id: 1
+                        category: Blockchain Operator
+                    organizations:
+                      - id: 1
+                        name: Bantu Foundation
+                        address: bantufoundation.org
+                        city: null
+                        region: null
+                        country: null
+                        website: null
+                        phone_number: null
+                        email: ops@bantufoundation.org
+                        service_description: The Bantu Blockchain Foundation (BBF) is a non-profit entity that develops blockchain-based financial inclusion solutions to help address Africa's unique challenges
+                        longitude: null
+                        latitude: null
+                        industry_category_id: 1
+      operationId: get-v1-organizations-category
+      description: Get list of all organizations that matches the category ID
+    parameters:
+      - schema:
+          type: string
+        name: catID
+        in: path
+        required: true
+  /v1/organization/list:
+    get:
+      summary: Get list of all Organizations
+      tags:
+        - Organization
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - id
+                        - category
+                      properties:
+                        id:
+                          type: number
+                        category:
+                          type: string
+                          minLength: 1
+                  organizations:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - id
+                        - name
+                        - address
+                        - email
+                        - service_description
+                        - industry_category_id
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                          minLength: 1
+                        address:
+                          type: string
+                          minLength: 1
+                        city: {}
+                        region: {}
+                        country: {}
+                        website: {}
+                        phone_number: {}
+                        email:
+                          type: string
+                          minLength: 1
+                        service_description:
+                          type: string
+                          minLength: 1
+                        longitude: {}
+                        latitude: {}
+                        industry_category_id:
+                          type: number
+                required:
+                  - categories
+                  - organizations
+              examples:
+                Sample response:
+                  value:
+                    categories:
+                      - id: 1
+                        category: Blockchain Operator
+                    organizations:
+                      - id: 1
+                        name: Bantu Foundation
+                        address: bantufoundation.org
+                        city: null
+                        region: null
+                        country: null
+                        website: null
+                        phone_number: null
+                        email: ops@bantufoundation.org
+                        service_description: The Bantu Blockchain Foundation (BBF) is a non-profit entity that develops blockchain-based financial inclusion solutions to help address Africa's unique challenges
+                        longitude: null
+                        latitude: null
+                        industry_category_id: 1
+      operationId: get-v1-organization-list
+      description: Get list of all Organizations
+  /v1/organization/categories:
+    get:
+      summary: Get all  categories
+      tags:
+        - Organization
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - id
+                        - category
+                      properties:
+                        id:
+                          type: number
+                        category:
+                          type: string
+                          minLength: 1
+                required:
+                  - categories
+              examples:
+                Sample response:
+                  value:
+                    categories:
+                      - id: 1
+                        category: Blockchain Operator
+      operationId: get-v1-organization-categories
+      description: 'Get list of all organization categories '
 components:
   schemas: {}
   securitySchemes: {}
 tags:
-  - name: Create new user
   - name: Users
+  - name: Payment
+  - name: Organization
