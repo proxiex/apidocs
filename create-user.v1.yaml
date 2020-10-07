@@ -2,6 +2,10 @@ openapi: 3.0.0
 info:
   title: Bantupay API
   version: '1.0'
+  x-logo:
+    url: images/logo.png
+    backgroundColor: '#FFFFFF'
+    altText: Bantu logo
   description: This is cool
   contact:
     name: Bantypay
@@ -137,7 +141,7 @@ paths:
                   - data
                   - geodata
               examples:
-                example-1:
+                example:
                   value:
                     currency:
                       alphabetic_code: string
@@ -184,8 +188,111 @@ paths:
           content:
             application/json:
               schema:
+                description: ''
                 type: object
-                properties: {}
+                properties:
+                  id:
+                    type: number
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  middle_name:
+                    type: string
+                  username:
+                    type: string
+                    minLength: 1
+                  domain_id:
+                    type: number
+                  twitter: {}
+                  email: {}
+                  instagram: {}
+                  public_key:
+                    type: string
+                    minLength: 1
+                  ref_code: {}
+                  referrer: {}
+                  image_thumbnail:
+                    type: string
+                  country_code:
+                    type: string
+                    minLength: 1
+                  mobile: {}
+                  latitude:
+                    type: number
+                  longitude:
+                    type: number
+                  currency:
+                    type: string
+                    minLength: 1
+                  alphabetic_code:
+                    type: string
+                    minLength: 1
+                  city:
+                    type: string
+                    minLength: 1
+                  region:
+                    type: string
+                    minLength: 1
+                  region_name:
+                    type: string
+                    minLength: 1
+                  time_zone:
+                    type: string
+                    minLength: 1
+                  isp:
+                    type: string
+                    minLength: 1
+                  account_status:
+                    type: number
+                required:
+                  - id
+                  - first_name
+                  - last_name
+                  - middle_name
+                  - username
+                  - domain_id
+                  - public_key
+                  - image_thumbnail
+                  - country_code
+                  - latitude
+                  - longitude
+                  - currency
+                  - alphabetic_code
+                  - city
+                  - region
+                  - region_name
+                  - time_zone
+                  - isp
+                  - account_status
+              examples:
+                New user:
+                  value:
+                    id: 103
+                    first_name: John
+                    last_name: Wick
+                    middle_name: ''
+                    username: jwick
+                    domain_id: 1
+                    twitter: null
+                    email: null
+                    instagram: null
+                    public_key: GCGMGDI2EJQVWCKJNE6DOGB743N7VLWJB7OBHWJ3XJLJPA5FLJGMUHFA
+                    ref_code: null
+                    referrer: null
+                    image_thumbnail: ''
+                    country_code: NG
+                    mobile: null
+                    latitude: 7.1472
+                    longitude: 3.3505
+                    currency: Naira
+                    alphabetic_code: NGN
+                    city: Abeokuta
+                    region: OG
+                    region_name: Ogun State
+                    time_zone: Africa/Lagos
+                    isp: SP 217
+                    account_status: 0
         '409':
           description: Conflict
           content:
@@ -203,8 +310,10 @@ paths:
                 Public key already in use:
                   value:
                     error: Public Key Already Exists
+                Username already exits:
+                  value:
+                    error: username already exists
       tags:
-        - Create new user
         - Users
       description: This endpoint creates a new user with the public key that has been generated. If the user already exsits you get a confict error. Also public key can only be used once.
       requestBody:
@@ -231,7 +340,7 @@ paths:
             examples:
               New user - success:
                 value:
-                  username: jasmine*bantupay.org
+                  username: totally_new_userhere*bantupay.org
                   domain_id: 1
                   public_key: GAOAYQLXKOMRFUDDM26FKDFE6VM72YBW6PE7YD65J74MCZXAPVSEWEYI
               User already exist - fail:
