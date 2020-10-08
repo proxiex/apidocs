@@ -175,7 +175,7 @@ paths:
       operationId: get-User-Info
       description: Get's geo location information of a user
       tags:
-        - Users
+        - User
     parameters: []
   /v1/user/account:
     post:
@@ -312,8 +312,6 @@ paths:
                 Username already exits:
                   value:
                     error: username already exists
-      tags:
-        - Users
       description: This endpoint creates a new user with the public key that has been generated. If the user already exsits you get a confict error. Also public key can only be used once.
       requestBody:
         content:
@@ -348,12 +346,12 @@ paths:
                   domain_id: 1
                   public_key: GAOAYQLXKOMRFUDDM26FKDFE6VM72YBW6PE7YD65J74MCZXAPVSEWEYI
         description: ''
+      tags:
+        - User
     parameters: []
   '/v1/user/account/info/{accountName}':
     get:
       summary: Get specific user info
-      tags:
-        - Users
       responses:
         '200':
           description: OK
@@ -709,6 +707,8 @@ paths:
         When blockchain_data=1, then the “blockchain_status“ key in the response holds the status of the Blockchain Account. 200 means it is available on blockchain. 404 means it is not available (account not activated).
 
         When 200, it will return the blockchain account detail. When blockchain_data=0 (default), “blockchain_status“ is 0. So, if you want to return the blockchain data of the bantu account information, you have to set the append flag to 1. “blockchain_status“ has these values: 0, 200, 404.
+      tags:
+        - User
     parameters:
       - schema:
           type: string
@@ -752,12 +752,10 @@ paths:
                   transaction_type: 0
         description: XDR is generated using SDK
       tags:
-        - Payment
+        - User
   '/v1/user/payment/history/{accountName}':
     get:
       summary: Get user payment history
-      tags:
-        - Payment
       responses:
         '200':
           description: OK
@@ -1395,6 +1393,8 @@ paths:
           name: limit
           description: set to how many records you want to see
       description: Get user payment history
+      tags:
+        - User
     parameters:
       - schema:
           type: string
@@ -1405,8 +1405,6 @@ paths:
   '/v1/user/payment/notifications/{accountName}/{lastTransactionID}':
     get:
       summary: Get payment notification
-      tags:
-        - Payment
       responses:
         '200':
           description: OK
@@ -1872,6 +1870,8 @@ paths:
           in: query
           name: limit
       description: This returns the payments after the transaction that was passed in.
+      tags:
+        - User
     parameters:
       - schema:
           type: string
@@ -1889,7 +1889,7 @@ paths:
     get:
       summary: Get local currency rates
       tags:
-        - Payment
+        - Currency
       responses:
         '200':
           description: OK
@@ -2869,6 +2869,6 @@ components:
   schemas: {}
   securitySchemes: {}
 tags:
-  - name: Users
-  - name: Payment
   - name: Organization
+  - name: Currency
+  - name: User
