@@ -141,37 +141,37 @@ paths:
                   - data
                   - geodata
               examples:
-                example:
+                Sample response:
                   value:
                     currency:
-                      alphabetic_code: string
-                      currency: string
-                      entity: string
+                      alphabetic_code: NGN
+                      currency: Naira
+                      entity: NIGERIA
                       currency_format:
-                        country_currency: string
+                        country_currency: NGN
                         currency_description:
-                          fraction_size: 0
+                          fraction_size: 2
                           symbol:
-                            grapheme: string
-                            template: string
-                            rtl: true
-                    data: string
+                            grapheme: ₦
+                            template: $1
+                            rtl: false
+                    data: BantuPay Service Information
                     geodata:
-                      as: string
-                      city: string
-                      country: string
-                      countryCode: string
-                      isp: string
-                      lat: 0
-                      lon: 0
-                      org: string
-                      query: string
-                      region: string
-                      regionName: string
-                      status: string
-                      timezone: string
-                      zip: string
-                      ip: string
+                      as: AS37340 SPECTRANET LIMITED
+                      city: Abeokuta
+                      country: Nigeria
+                      countryCode: NG
+                      isp: SP 217
+                      lat: 7.1472
+                      lon: 3.3505
+                      org: ''
+                      query: 41.217.80.102
+                      region: OG
+                      regionName: Ogun State
+                      status: success
+                      timezone: Africa/Lagos
+                      zip: ''
+                      ip: 41.217.80.102
       operationId: get-User-Info
       description: Get's geo location information of a user
       tags:
