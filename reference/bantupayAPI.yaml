@@ -11,8 +11,6 @@ info:
     name: Bantypay
 servers:
   - url: 'https://api-testnet.bantupay.org'
-  - url: 'wss:api-testnet.bantupay.org'
-    description: Web Socket
 paths:
   /v1/user/location/info:
     get:
@@ -178,31 +176,6 @@ paths:
       description: Get's geo location information of a user
       tags:
         - User
-      requestBody:
-        content:
-          application/json:
-            schema:
-              description: ''
-              type: object
-              properties:
-                username:
-                  type: string
-                  minLength: 1
-              required:
-                - username
-            examples:
-              example-1:
-                value:
-                  username: string
-          application/xml:
-            schema:
-              type: object
-              properties: {}
-          multipart/form-data:
-            schema:
-              type: object
-              properties: {}
-        description: ''
     parameters: []
   /v1/user/account:
     post:
@@ -375,6 +348,9 @@ paths:
         description: ''
       tags:
         - User
+    x-codeSamples:
+      lang: JavaScript
+      source: console.log('Hello World');
     parameters: []
   '/v1/user/account/info/{account_name}':
     get:
@@ -2892,6 +2868,18 @@ paths:
                         category: Blockchain Operator
       operationId: get-v1-organization-categories
       description: 'Get list of all organization categories '
+  '/wss://baseURL/websocket/{account_name}':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: 'get-wss:-baseURL-websocket'
+    parameters:
+      - schema:
+          type: string
+        name: account_name
+        in: path
+        required: true
 components:
   schemas: {}
   securitySchemes: {}
