@@ -3532,7 +3532,7 @@ paths:
 
         Use `{ stream: 'ALL' }` so that you get ALL user based stream events.
       tags:
-        - exchange
+        - Exchange
     parameters: []
   /v1/user/offer:
     post:
@@ -4113,4 +4113,4 @@ tags:
   - name: Currency
   - name: Location
   - name: Organization
-  - name: exchange
+  - name: Exchange
