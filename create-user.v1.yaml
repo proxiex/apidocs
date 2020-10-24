@@ -6,7 +6,7 @@ info:
     url: images/logo.png
     backgroundColor: '#FFFFFF'
     altText: Bantu logo
-  description: Welcome to Bantupay API Documentation.
+  description: Welcome to BantuPay API Documentation.
   contact:
     name: Bantypay
 servers:
@@ -174,7 +174,7 @@ paths:
                       timezone: Africa/Lagos
                       zip: ''
                       ip: 41.217.80.102
-      operationId: get-User-Info
+      operationId: get-v1-user-Info
       description: Get's geo location information of a user
       tags:
         - User
@@ -339,7 +339,7 @@ paths:
                 Username already exits:
                   value:
                     error: username already exists
-      description: This endpoint creates a new user with the public key that has been generated. If the user already exsits you get a confict error. Also public key can only be used once.
+      description: This endpoint creates a new user with the public key that has been generated. If the user already exists you get a conflict error. Also public key can only be used once.
       requestBody:
         content:
           application/json:
@@ -376,7 +376,7 @@ paths:
       tags:
         - User
     parameters: []
-  '/v1/user/account/info/{account_name}':
+  '/v1/user/account/info/{username}':
     get:
       summary: Get user info
       responses:
@@ -718,7 +718,7 @@ paths:
                       latitude: 7.1472
                       longitude: 3.3505
                       account_status: 0
-      operationId: get-user-account-info
+      operationId: get-v1-user-account-info
       parameters:
         - schema:
             type: string
@@ -747,10 +747,10 @@ paths:
     parameters:
       - schema:
           type: string
-        name: account_name
+        name: username
         in: path
         required: true
-        description: account_name can either be a username or 56 character long public key
+        description: username can either be a username or 56 character long public key
   /v1/user/payment:
     post:
       summary: Make payment
@@ -788,7 +788,7 @@ paths:
         description: XDR is generated using SDK
       tags:
         - User
-  '/v1/user/payment/history/{account_name}':
+  '/v1/user/payment/history/{username}':
     get:
       summary: Get user payment history
       responses:
@@ -1420,7 +1420,7 @@ paths:
                 record not found:
                   value:
                     error: record not found
-      operationId: get-user-payment-history
+      operationId: get-v1-user-payment-history
       parameters:
         - schema:
             type: integer
@@ -1433,11 +1433,11 @@ paths:
     parameters:
       - schema:
           type: string
-        name: account_name
+        name: username
         in: path
         required: true
-        description: account_name can either be a username or 56 character long public key
-  '/v1/user/payment/notifications/{account_name}/{last_transaction_iD}':
+        description: username can either be a username or 56 character long public key
+  '/v1/user/payment/notifications/{username}/{last_transaction_iD}':
     get:
       summary: Get payment notification
       responses:
@@ -1910,10 +1910,10 @@ paths:
     parameters:
       - schema:
           type: string
-        name: account_name
+        name: username
         in: path
         required: true
-        description: account_name can either be a username or 56 character long public key
+        description: username can either be a username or 56 character long public key
       - schema:
           type: string
         name: last_transaction_iD
@@ -3515,7 +3515,7 @@ paths:
                             asset_type:
                               asset_type: native
                               asset_code: XBN
-      operationId: get-Websockets
+      operationId: get-v1-websockets
       description: |-
         Websocket connection endpoint that can be used to stream payment information in real time.
 
@@ -3533,10 +3533,58 @@ paths:
         Use `{ stream: 'ALL' }` so that you get ALL user based stream events.
       tags:
         - Exchange
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            const ws = new WebSocket(websocketUrl)
+
+            ws.onopen = function (evt) {
+              const obj = { transaction_xdr: 'Socket Connection Message', transaction_type: 9 };
+              ws.send(JSON.stringify(obj))
+            }
+            ws.onmessage = (evt) => {
+              const streamData = JSON.parse(evt.data)
+              console.log(streamData)}
+            }
+        - lang: Python
+          source: |-
+            import socketio
+
+            sio = socketio.Client()
+
+            @sio.event
+            def connect():
+                print('connection established')
+
+            @sio.event
+            def my_message(data):
+                print('message received with ', data)
+                sio.emit('my response', {'response': 'my response'})
+
+            @sio.event
+            def disconnect():
+                print('disconnected from server')
+
+            sio.connect('wss://baseUrl/v1/websocket/{username}')
+            sio.wait()
+        - lang: Ruby
+          source: |-
+            require 'plezi'
+
+            class Echo
+
+            def index
+            "this is an echo server - use websockets to connect. test with: wss://baseUrl/v1/websocket/{username}" 
+        - lang: Golang
+          source: ''
+        - lang: Java
+          source: ''
+        - lang: PHP
+          source: ''
     parameters: []
   /v1/user/offer:
     post:
-      summary: ''
+      summary: Create offer
       operationId: post-v1-user-offer
       responses:
         '200':
@@ -3564,9 +3612,9 @@ paths:
         description: Transaction XDR will be generated by the SDK
       tags:
         - User
-      description: retrieves the user trades that has occurred in the account
+      description: Retrieves the user trades that has occurred in the account
     parameters: []
-  '/v1/user/offer/history/{account_name}':
+  '/v1/user/offer/history/{username}':
     get:
       summary: Get offer
       tags:
@@ -3822,13 +3870,13 @@ paths:
     parameters:
       - schema:
           type: string
-        name: account_name
+        name: username
         in: path
         required: true
-        description: account_name can either be a username or 56 character long public key
-  '/v1/user/trade/{account_name}':
+        description: username can either be a username or 56 character long public key
+  '/v1/user/trade/{username}':
     get:
-      summary: Your GET endpoint
+      summary: Get trade history
       tags:
         - User
       responses:
@@ -4099,11 +4147,481 @@ paths:
     parameters:
       - schema:
           type: string
-        name: account_name
+        name: username
         in: path
         required: true
         description: |
-          account_name can either be a username or 56 character long public key
+          username can either be a username or 56 character long public key
+  /v1/user/payment/swap/paths/send:
+    get:
+      summary: Send swap requests
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  paths:
+                    type: object
+                    properties:
+                      _links:
+                        type: object
+                        properties:
+                          self:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                            required:
+                              - href
+                          next:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                            required:
+                              - href
+                          prev:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                            required:
+                              - href
+                        required:
+                          - self
+                          - next
+                          - prev
+                      _embedded:
+                        type: object
+                        properties:
+                          Records:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - source_asset_type
+                                - source_asset_code
+                                - source_asset_issuer
+                                - source_amount
+                                - destination_asset_type
+                                - destination_amount
+                              properties:
+                                source_asset_type:
+                                  type: string
+                                  minLength: 1
+                                source_asset_code:
+                                  type: string
+                                  minLength: 1
+                                source_asset_issuer:
+                                  type: string
+                                  minLength: 1
+                                source_amount:
+                                  type: string
+                                  minLength: 1
+                                destination_asset_type:
+                                  type: string
+                                  minLength: 1
+                                destination_amount:
+                                  type: string
+                                  minLength: 1
+                                path:
+                                  type: array
+                                  items:
+                                    required: []
+                                    properties: {}
+                        required:
+                          - Records
+                    required:
+                      - _links
+                      - _embedded
+                required:
+                  - paths
+              examples:
+                20 USDB to XBN:
+                  value:
+                    paths:
+                      _links:
+                        self:
+                          href: ''
+                        next:
+                          href: ''
+                        prev:
+                          href: ''
+                      _embedded:
+                        Records:
+                          - source_asset_type: credit_alphanum4
+                            source_asset_code: USDB
+                            source_asset_issuer: GBTNUZDIUMWZEGTNQCL5F73PIABCBJ4YQA2VJS7HXTBRDDSTWCE6UNXE
+                            source_amount: '20.0000000'
+                            destination_asset_type: native
+                            destination_amount: '5000.0000000'
+                            path: []
+                20XBN to USDB:
+                  value:
+                    paths:
+                      _links:
+                        self:
+                          href: ''
+                        next:
+                          href: ''
+                        prev:
+                          href: ''
+                      _embedded:
+                        Records:
+                          - source_asset_type: native
+                            source_amount: '20.0000000'
+                            destination_asset_type: credit_alphanum4
+                            destination_asset_code: USDB
+                            destination_asset_issuer: GBTNUZDIUMWZEGTNQCL5F73PIABCBJ4YQA2VJS7HXTBRDDSTWCE6UNXE
+                            destination_amount: '0.0701920'
+                            path: []
+      operationId: get-v1-user-payment-swap-paths-send
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: destination_assets
+        - schema:
+            type: string
+          in: query
+          name: source_asset_type
+        - schema:
+            type: string
+          in: query
+          name: source_asset_issuer
+        - schema:
+            type: string
+          in: query
+          name: source_amount
+        - schema:
+            type: string
+          in: query
+          name: source_asset_code
+      description: |-
+        Swapping 20 USDB to XBN query params exmple
+
+        - destination_assets: 'native',
+        - source_asset_type: 'native',
+        - source_asset_code: 'USDB',     
+        - source_asset_issuer:'GBTNUZDIUMWZEGTNQCL5F73PIABCBJ4YQA2VJS7HXTBRDDSTWCE6UNXE',
+        - source_amount: '20',
+
+        Swapping 20XBN to USDB query params example
+
+        - destination_assets: 'USDB:GBTNUZDIUMWZEGTNQCL5F73PIABCBJ4YQA2VJS7HXTBRDDSTWCE6UNXE',
+        - source_asset_type: 'native',
+        - source_asset_code: '',     
+        - source_asset_issuer:'',
+        - source_amount: '20'
+
+
+        Please note that you either specify:
+        1. "destination_account", which will list all paths to all assets in the account,
+         or 
+        2. "destination_assets", which will show only the paths to the specified asset.
+        You cannot specify both, it will be a bad request.
+  /v1/user/payment/swap/paths/receive:
+    get:
+      summary: Receive swap requests
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  paths:
+                    type: object
+                    properties:
+                      _links:
+                        type: object
+                        properties:
+                          self:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                            required:
+                              - href
+                          next:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                            required:
+                              - href
+                          prev:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                            required:
+                              - href
+                        required:
+                          - self
+                          - next
+                          - prev
+                      _embedded:
+                        type: object
+                        properties:
+                          Records:
+                            type: array
+                            uniqueItems: true
+                            minItems: 1
+                            items:
+                              required:
+                                - source_asset_type
+                                - source_asset_code
+                                - source_asset_issuer
+                                - source_amount
+                                - destination_asset_type
+                                - destination_asset_code
+                                - destination_asset_issuer
+                                - destination_amount
+                              properties:
+                                source_asset_type:
+                                  type: string
+                                  minLength: 1
+                                source_asset_code:
+                                  type: string
+                                  minLength: 1
+                                source_asset_issuer:
+                                  type: string
+                                  minLength: 1
+                                source_amount:
+                                  type: string
+                                  minLength: 1
+                                destination_asset_type:
+                                  type: string
+                                  minLength: 1
+                                destination_asset_code:
+                                  type: string
+                                  minLength: 1
+                                destination_asset_issuer:
+                                  type: string
+                                  minLength: 1
+                                destination_amount:
+                                  type: string
+                                  minLength: 1
+                                path:
+                                  type: array
+                                  uniqueItems: true
+                                  minItems: 1
+                                  items:
+                                    required:
+                                      - asset_type
+                                    properties:
+                                      asset_type:
+                                        type: string
+                                        minLength: 1
+                        required:
+                          - Records
+                    required:
+                      - _links
+                      - _embedded
+                required:
+                  - paths
+              examples:
+                Sample Response:
+                  value:
+                    paths:
+                      _links:
+                        self:
+                          href: ''
+                        next:
+                          href: ''
+                        prev:
+                          href: ''
+                      _embedded:
+                        Records:
+                          - source_asset_type: credit_alphanum4
+                            source_asset_code: LUMI
+                            source_asset_issuer: GBGUHXVAK32BZTWRBML7RNIQ3532QDR5RRXOJ2P2MGEPHC3YJREMRTLE
+                            source_amount: '560000.0000000'
+                            destination_asset_type: credit_alphanum4
+                            destination_asset_code: YAM
+                            destination_asset_issuer: GAJ65QHSOIXOA6FZMKDIBNGMHXQ7U46TNRBKDL3MTHERF2VRVMWU2F57
+                            destination_amount: '1000.0000000'
+                            path:
+                              - asset_type: native
+                          - source_asset_type: credit_alphanum4
+                            source_asset_code: LUMI
+                            source_asset_issuer: GBGUHXVAK32BZTWRBML7RNIQ3532QDR5RRXOJ2P2MGEPHC3YJREMRTLE
+                            source_amount: '566000.0000000'
+                            destination_asset_type: credit_alphanum4
+                            destination_asset_code: YAM
+                            destination_asset_issuer: GAJ65QHSOIXOA6FZMKDIBNGMHXQ7U46TNRBKDL3MTHERF2VRVMWU2F57
+                            destination_amount: '1000.0000000'
+                            path:
+                              - asset_type: native
+                              - asset_type: credit_alphanum4
+                                asset_code: NGNB
+                                asset_issuer: GDBS3RZBM4GHX43FLXHD4BNQIDGEAFVPC7XWVYXXX74HIAS2OQMC4VKZ
+      operationId: get-v1-user-payment-swap-paths-receive
+      description: |-
+        Query params
+
+        - destination_account: PUBLICK KEY,
+        - destination_asset_type: 'credit_alphanum4',
+        - destination_asset_code: 'YAM',
+        - destination_asset_issuer: 'GAJ65QHSOIXOA6FZMKDIBNGMHXQ7U46TNRBKDL3MTHERF2VRVMWU2F57',
+        - destination_amount: '1000',
+        - source_account: 'GCX2DB3UQSB3QYJ76ELVTKNWDGYRFNCOA2J5IODGU2NQ72U5N6GBANTU',
+        - source_assets: 'LUMI:GBGUHXVAK32BZTWRBML7RNIQ3532QDR5RRXOJ2P2MGEPHC3YJREMRTLE',
+
+        > Please note that you either specify:
+        > 1. "source_account", which will list all paths to all assets in the account,
+         or 
+        > 2. "source_assets", which will show only the paths to the specified asset.
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: destination_account
+          description: PUBLIC KEY
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: destination_asset_type
+          description: credit_alphanum4
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: destination_asset_code
+          description: YAM
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: destination_asset_issuer
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: destination_amount
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: source_account
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: source_assets
+          required: true
+  /v1/user/payment/swap:
+    post:
+      summary: XDR request for swap token
+      operationId: post-v1-user-payment-swap
+      responses:
+        '200':
+          description: OK
+      description: Hit this endpoint to submit XDR request for the token swap.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                transaction_xdr:
+                  type: string
+                  minLength: 1
+              required:
+                - transaction_xdr
+            examples:
+              example:
+                value:
+                  transaction_xdr: AAAAAgAAAACGBnho...==
+      tags:
+        - User
+  '/v1/user/verify-email/{username}/{email}':
+    post:
+      summary: Confirm email verification
+      operationId: post-v1-user-verify-email
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                required:
+                  - message
+              examples:
+                Sample response:
+                  value:
+                    message: request successfully sent
+      description: 'This initiates email verification request and sends an email message to the :email of the :username with a 6 character verification code'
+    parameters:
+      - schema:
+          type: string
+        name: username
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: email
+        in: path
+        required: true
+  '/v1/user/verify-email/{username}/{email}/{code}':
+    parameters:
+      - schema:
+          type: string
+        name: username
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: email
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: code
+        in: path
+        required: true
+    post:
+      summary: ''
+      operationId: post-v1-user-verify-email-username-email-code
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                required:
+                  - message
+              examples:
+                Sample response:
+                  value:
+                    message: verification successful
+      description: 'This is to verify the 6 character :code that was sent by email to the :email address which belongs to the :username profile. Confirmation email is sent upon completion of verification'
 components:
   schemas: {}
   securitySchemes: {}
